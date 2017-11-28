@@ -3,9 +3,10 @@ $(document).ready(() => {
     getFeatured();
 
     $('#searchForm').on('submit', (e) => {
+
         var searchText = $('#searchText').val();
         getMovieDetails(searchText);
-        
+        $('#featured').html("");
         e.preventDefault();
     });
 });
@@ -26,12 +27,13 @@ function getFeatured()
             var basicPosterUrl = "https://www.xauzit.com/wp-content/uploads/" + year + "/" + month;
 
             output += `
-                <div class="col-md-3">
+                <div class="col-md-4">
                    <div class="well text-center">
-                    <img src=`;
+                    <img class="img-rounded" src=`;
             output+=basicPosterUrl + `${movie.poster_path}>
-                    <h5>${movie.title}
-                   </div>
+                    <h5 style="text-align:center;float:center;">${movie.title}</h5>
+                    <h5 style="text-align:right;float:right;color:orange">${movie.vote_average}</h5>
+                    </div>
                 </div>
             `
         });
@@ -52,10 +54,10 @@ function getMovieDetails(searchText)
         var movielist = response.data.Search;
         var output = "";
         $.each(movielist, (index, movie) => {
-            output += `<div class="col-md-4">
+            output += `<div class="col-md-3">
                         <div class="well text-center">
                             <img src="${movie.Poster}">
-                            <h5>${movie.Title}</h5>
+                            <h4>${movie.Title}</h4>
                             <a onclick="movieSelected('${movie.imdbID}')" class="btn btn-primary" href="#">Movie Details</a>
                         </div>
                     </div>`

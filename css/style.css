@@ -15,3 +15,11 @@
 #featured img, #featured img {
     width: 100%;
 }
+
+.img-rounded {
+    border-radius: 25px;
+}
+
+h5 {
+    display:inline;
+}
