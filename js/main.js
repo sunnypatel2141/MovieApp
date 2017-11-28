@@ -1,4 +1,7 @@
 $(document).ready(() => {
+
+    getFeatured();
+
     $('#searchForm').on('submit', (e) => {
         var searchText = $('#searchText').val();
         getMovieDetails(searchText);
@@ -6,6 +9,32 @@ $(document).ready(() => {
         e.preventDefault();
     });
 });
+
+function getFeatured()
+{
+    var api = "api_key=55a2b131521947fe736a0a2f26f463f7";
+    var url = " https://api.themoviedb.org/3/movie/now_playing?" + api;
+    axios.get(url)
+    .then(function (response) {
+        console.log (response.data);
+        // var movielist = response.data.Search;
+        // var output = "";
+        // $.each(movielist, (index, movie) => {
+        //     output += `<div class="col-md-3">
+        //                 <div class="well text-center">
+        //                     <img src="${movie.Poster}">
+        //                     <h5>${movie.Title}</h5>
+        //                     <a onclick="movieSelected('${movie.imdbID}')" class="btn btn-primary" href="#">Movie Details</a>
+        //                 </div>
+        //             </div>`
+        // });
+        // $('#movies').html(output);
+        // console.log(output);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 
 function getMovieDetails(searchText)
 {
@@ -46,6 +75,7 @@ function getMovie()
     var url = "http://www.omdbapi.com/?i=" + movieId + api;
     axios.get(url)
     .then(function (response) {
+        // console.log(response.data);
         var movie = response.data;
         var output = `
                     <div class="row">
