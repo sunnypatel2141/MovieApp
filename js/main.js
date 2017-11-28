@@ -16,19 +16,26 @@ function getFeatured()
     var url = " https://api.themoviedb.org/3/movie/now_playing?" + api;
     axios.get(url)
     .then(function (response) {
-        console.log (response.data);
-        // var movielist = response.data.Search;
-        // var output = "";
-        // $.each(movielist, (index, movie) => {
-        //     output += `<div class="col-md-3">
-        //                 <div class="well text-center">
-        //                     <img src="${movie.Poster}">
-        //                     <h5>${movie.Title}</h5>
-        //                     <a onclick="movieSelected('${movie.imdbID}')" class="btn btn-primary" href="#">Movie Details</a>
-        //                 </div>
-        //             </div>`
-        // });
-        // $('#movies').html(output);
+        var movielist = response.data.results;
+        var output = "";
+        
+        $.each(movielist, (index, movie) => {
+            var date = movie.release_date.split("-");
+            var year = date[0];
+            var month = date[1];
+            var basicPosterUrl = "https://www.xauzit.com/wp-content/uploads/" + year + "/" + month;
+
+            output += `
+                <div class="col-md-3">
+                   <div class="well text-center">
+                    <img src=`;
+            output+=basicPosterUrl + `${movie.poster_path}>
+                    <h5>${movie.title}
+                   </div>
+                </div>
+            `
+        });
+        $('#featured').html(output);
         // console.log(output);
     })
     .catch(function (error) {
@@ -45,7 +52,7 @@ function getMovieDetails(searchText)
         var movielist = response.data.Search;
         var output = "";
         $.each(movielist, (index, movie) => {
-            output += `<div class="col-md-3">
+            output += `<div class="col-md-4">
                         <div class="well text-center">
                             <img src="${movie.Poster}">
                             <h5>${movie.Title}</h5>
