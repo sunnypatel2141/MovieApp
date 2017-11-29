@@ -256,7 +256,9 @@ function getShowtimesFull()
                         <div class="row">
                             <h5>
                                 <strong>Phone: </strong> ${cinema.telephone} 
-                            <a href="${cinema.website}"><h5><strong>Website: </strong>${cinema.website}</a></h5>
+                                </br>
+                                <strong>Website: </strong>
+                            <a href="${cinema.website}">${cinema.website}</a></h5>
                         </div>
                     </div>
                 `
