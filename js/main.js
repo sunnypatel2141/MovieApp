@@ -11,8 +11,6 @@ $(document).ready(() => {
     });
 });
 
-//OOhsSTRa792Ze2xsx6SQm2UlxiNpz7wS
-
 function getFeatured() {
     var api = "api_key=55a2b131521947fe736a0a2f26f463f7";
     var url = " https://api.themoviedb.org/3/movie/now_playing?" + api;
@@ -32,7 +30,7 @@ function getFeatured() {
                 }
 
                 output += `
-            <div class="col-md-6">
+            <div class="col-md-6" style="padding:5px">
                    <div class="row">
                     <div class="col-md-4">
                         <img class="img-rounded" src=`;
@@ -222,4 +220,55 @@ function getMovie() {
         .catch(function (error) {
             console.log(error);
         });
+}
+
+function getShowtimes()
+{
+    window.location = 'showtimes.html';
+    return false;
+}
+
+function getShowtimesFull()
+{
+    var apikey = "&apikey=OOhsSTRa792Ze2xsx6SQm2UlxiNpz7wS";
+    var url = "http://freegeoip.net/json/";
+    // var urlshowtime = "https://api.internationalshowtimes.com/v4/cinemas/?location=43.7328,-79.7953&radius=20&apikey=OOhsSTRa792Ze2xsx6SQm2UlxiNpz7wS"
+
+    axios.get(url)
+    .then(function (response) {
+        var latitude = response.data.latitude;
+        var longitude = response.data.longitude;
+
+        var urlShowtime = "https://api.internationalshowtimes.com/v4/cinemas/?location=" + latitude + "," + longitude + apikey;
+        axios.get(urlShowtime)
+        .then(function (resp) {
+            var cinemas = resp.data.cinemas;
+            console.log(cinemas);
+            var output = "";
+
+            $.each(cinemas, (index, cinema) => {
+                var theaterId = cinema.id;
+                output += `
+                    <div class="jumbotron" id="orangeJumb">
+                        <div class="row">
+                            <h4>${cinema.name}</h4>
+                        </div>
+                        <div class="row">
+                            <h5>
+                                <strong>Phone: </strong> ${cinema.telephone} 
+                            <a href="${cinema.website}"><h5><strong>Website: </strong>${cinema.website}</a></h5>
+                        </div>
+                    </div>
+                `
+            });
+            $('#showtimes').html(output);
+        })
+        .catch (function (error) {
+            console.log(error);
+        });
+
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
 }
